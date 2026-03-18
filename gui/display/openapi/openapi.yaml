@@ -90,7 +90,7 @@ components:
           type: string
           description: "player name"
         rookie:
-          type: integer
+          type: number
           description: "player skills, a number between 0 and 1. 1 is worse. 0 is awesome"
       required:
         - name

@@ -22,7 +22,7 @@ export const usePlayGame = () => {
                 setPinsDown(response === undefined ? 0 : response.pinsDown);
             }).catch((reason) => {
                 const {errorCode} = reason.data;
-                if (errorCode === 1401) {
+                if (errorCode === "GAME_OVER") {
                     setGameOver(true);
                 } else {
                     setPlaySuccess(false);

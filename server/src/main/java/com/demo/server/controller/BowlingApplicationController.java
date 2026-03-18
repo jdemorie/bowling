@@ -49,9 +49,9 @@ public class BowlingApplicationController implements DefaultApi {
   @Consumes(MediaType.APPLICATION_JSON)
   @Override
   public Mono<@Valid ResultBean> play(@Body @NotNull @Valid PlayerBean playerBean) {
-    Integer rookie = playerBean.getRookie();
+    BigDecimal rookie = playerBean.getRookie();
     int remainingPins = bowlingGame.getRemainingPins(playerBean.getName());
-    int pinsDowns = (int) Math.round(Math.pow(new Random().nextDouble(), (rookie == null ? 1 : rookie)) * remainingPins);
+    int pinsDowns = (int) Math.round(Math.pow(new Random().nextDouble(), (rookie == null ? 1 : rookie.doubleValue())) * remainingPins);
     bowlingGame.pinsDown(playerBean.getName(), pinsDowns);
     return Mono.delay(Duration.ofSeconds(3)).then(Mono.just(new ResultBean(BigDecimal.valueOf(pinsDowns))));
   }

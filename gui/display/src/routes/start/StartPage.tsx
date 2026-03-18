@@ -31,10 +31,10 @@ const StartPage: FC = () => {
         const level = e.target.value;
         setSelectedLevel(level);
         if (level === "easy") {
-            setRookie(0.2);
+            setRookie(0.5);
         }
         if (level === "medium") {
-            setRookie(0.5);
+            setRookie(0.8);
         }
         if (level === "hard") {
             setRookie(1);
