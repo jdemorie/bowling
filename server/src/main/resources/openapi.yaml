@@ -1,0 +1,142 @@
+openapi: 3.0.3
+
+info:
+  title: Bowling Internal API
+  version: "1.0"
+
+paths:
+  /server/score:
+    get:
+      summary: "GET server/score"
+      operationId: "getScore"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/ScoreBean"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+  /server/start:
+    post:
+      summary: "POST server/start"
+      operationId: "start"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/PlayerBean"
+      responses:
+        200:
+          $ref: "#/components/responses/ServerResponse"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+  /server/play:
+    post:
+      summary: "POST server/play"
+      operationId: "play"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlayerBean"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResultBean"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+components:
+  responses:
+    ServerResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ResponseBean"
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorBean"
+    ServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorBean"
+  schemas:
+    PlayerBean:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "player name"
+      required:
+        - name
+    ScoreBean:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "player name"
+        turns:
+          type: array
+          items:
+            $ref: "#/components/schemas/TurnBean"
+        score:
+          type: integer
+          description: "player score"
+      required:
+        - name
+        - score
+    TurnBean:
+      type: object
+      properties:
+        value:
+          type: string
+          description: "value of the turn, can be a number or 'X' for strike or '/' for spare"
+      required:
+        - value
+    ResponseBean:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "Response message"
+      required:
+        - message
+    ResultBean:
+      type: object
+      properties:
+        pinsDown:
+          type: number
+          description: "Number of pins down in the current turn"
+      required:
+        - pinsDown
+    ErrorBean:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "Error message"
+      required:
+        - code
+        - message
