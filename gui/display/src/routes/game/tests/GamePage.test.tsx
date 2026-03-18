@@ -65,20 +65,14 @@ function mockGetScore(data: ScoreBean[]) {
 }
 
 function mockPlay() {
-    const mockQuery = {
-        data: null,
-        isLoading: false,
-        isSuccess: false,
-        isError: false,
+    const promiseWithUnwrap = {
+        unwrap: () => {
+            return Promise.resolve({
+                data: [],
+            });
+        },
     };
-    const mockPlayMutation = jest.fn().mockImplementation(() =>
-        Promise.resolve({
-            data: [],
-        }),
-    );
-    (usePlayMutation as jest.Mock).mockReturnValue([
-        mockPlayMutation,
-        mockQuery,
-    ]);
+    const mockPlayMutation = jest.fn().mockImplementation(() => promiseWithUnwrap);
+    (usePlayMutation as jest.Mock).mockReturnValue([mockPlayMutation]);
 }
 

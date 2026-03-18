@@ -55,6 +55,11 @@ export const StyledButton = styled(motion.button)`
     padding: 10px 20px;
 `;
 
+export const StyleSelect = styled(motion.select)`
+    padding: 10px;
+    font-size: 16px;
+`;
+
 export const StyledErrorMessage = styled(motion.section)`
     display: flex;
     justify-content: center;
@@ -70,7 +75,7 @@ export const StyledLabel = styled(motion.label)`
 `
 
 export const LabelLaunching = styled(motion.label)`
-    color: white;
+    color: red;
     margin: auto;
     font-size: 24px;
     font-weight: bold;

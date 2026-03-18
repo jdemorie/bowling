@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from "react";
-import {StyledButton, Container, Gif, InputColumnContainer, StyledLabel} from "../../shared/SharedStyles";
+import {Container, Gif, InputColumnContainer, StyledButton, StyledLabel} from "../../shared/SharedStyles";
 import {useName} from "../../store/playerSlice";
 import useColumnDefs from "./useColumnDefs";
 import Launching from "./Launching";
@@ -14,7 +14,7 @@ const GamePage = () => {
     const headers = useColumnDefs();
     const [isLaunching, setIsLaunching] = useState(false);
     const query = useGetScoreQuery();
-    const {playGame, isPlayStart, getPinsDown} = usePlayGame();
+    const {playGame, isPlayStart, getPinsDown, gameOver} = usePlayGame();
 
     const data: Array<Record<string, string>> | undefined = useMemo(() => {
         return query.data?.map(scoreBean => {
@@ -53,13 +53,15 @@ const GamePage = () => {
                     <Container>
                         <Gif src="/pins.jpg" alt="Bowling GIF"/>
                         <InputColumnContainer>
-                            <h2 style={{color: "white"}}>Bowling score</h2>
+                            <h2 style={{
+                                color: "white"
+                            }}>Bowling score</h2>
                             <Grid headers={headers} data={data} testId="grid"/>
-                            <StyledButton onClick={throwBall}>
+                            <StyledButton onClick={throwBall} disabled={gameOver}>
                                 Throw Ball
                             </StyledButton>
                             <StyledLabel>
-                                Pins Down: {getPinsDown}
+                                {gameOver ? "Game Over" : `Pins Down: ${getPinsDown}`}
                             </StyledLabel>
                         </InputColumnContainer>
                     </Container>

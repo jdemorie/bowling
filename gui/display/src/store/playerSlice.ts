@@ -4,6 +4,7 @@ import {useCallback} from "react";
 
 interface PlayerState {
     name: string;
+    rookie?: number;
 }
 
 const initialState: PlayerState = {
@@ -17,6 +18,9 @@ export const playerSlice = createSlice({
         setName: (state, {payload}: PayloadAction<string>) => {
             state.name = payload;
         },
+        setRookie: (state, {payload}: PayloadAction<number>) => {
+            state.rookie = payload;
+        }
     },
 });
 
@@ -36,9 +40,26 @@ export const useSetName = () => {
     );
 };
 
+export const useRookie = () =>
+    useSelector(
+        (state: { ['player']: PlayerState }) =>
+            state['player'].rookie,
+    );
+
+export const useSetRookie = () => {
+    const dispatch = useDispatch();
+    return useCallback(
+        (rookie: number) => {
+            dispatch(setRookie(rookie));
+        },
+        [dispatch],
+    );
+}
+
 export const {
     actions: {
         setName,
+        setRookie,
     },
 } = playerSlice;
 

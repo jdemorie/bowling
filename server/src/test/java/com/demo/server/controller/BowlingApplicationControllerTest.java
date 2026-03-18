@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Random;
 
 @MicronautTest
 public class BowlingApplicationControllerTest {
@@ -37,5 +38,20 @@ public class BowlingApplicationControllerTest {
     scenario.givenABowlingServer()
         .whenIStartGame("John")
         .thenTheScoreShouldBe(expectedScore);
+  }
+  
+  @Test
+  void test() {
+    int count = 0;
+    double bias = 0.2;
+    int remainingPins = 10;
+    int pinsDowns = (int) Math.round(Math.pow(new Random().nextDouble(), bias) * remainingPins);
+    for (int i = 0; i < 100; i++) {
+      if (pinsDowns == 10) {
+        count++;
+      }
+      pinsDowns = (int) Math.round(Math.pow(new Random().nextDouble(), bias) * remainingPins);
+    }
+    System.out.println("Strike count: " + count);
   }
 }

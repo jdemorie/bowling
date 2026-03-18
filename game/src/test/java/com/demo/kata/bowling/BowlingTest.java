@@ -622,7 +622,7 @@ public class BowlingTest {
   }
 
   @Test
-  void givenABowlingAreaWhenIDoAllTurnwWithoutStrikeOrSpareForLatestThenTheGameIsOver() throws Exception {
+  void givenABowlingAreaWhenIDoAllTurnWithoutStrikeOrSpareForLatestThenTheGameIsOver() throws Exception {
     BowlingScenario bowlingScenario = new BowlingScenario();
     bowlingScenario.givenABowlingArea()
         .whenIStartAGame("player")
